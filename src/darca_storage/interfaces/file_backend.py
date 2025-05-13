@@ -1,20 +1,27 @@
-from typing import List, Union, Protocol
+from typing import List, Union, Protocol, Optional
 
 
 class FileBackend(Protocol):
     """
     Protocol for backend-agnostic file and directory operations.
 
-    Implementations may target local filesystems, remote storage (e.g., S3), 
+    Implementations may target local filesystems, remote storage (e.g., S3),
     or virtual in-memory stores. All paths are treated as opaque strings.
     """
 
     def read(self, path: str, binary: bool = False) -> Union[str, bytes]:
-        """Read the contents of a file."""
+        """Read the contents of a file. Binary flag may be ignored if backend supports auto-detection."""
         ...
 
-    def write(self, path: str, content: Union[str, bytes]):
-        """Write contents to a file. Overwrites if it exists."""
+    def write(
+        self,
+        path: str,
+        content: Union[str, bytes],
+        *,
+        permissions: Optional[int] = None,
+        user: Optional[str] = None
+    ):
+        """Write contents to a file. Overwrites if it exists. Supports optional permissions and ownership."""
         ...
 
     def delete(self, path: str):
@@ -29,8 +36,15 @@ class FileBackend(Protocol):
         """List contents of a directory."""
         ...
 
-    def mkdir(self, path: str, parents: bool = True):
-        """Create a directory."""
+    def mkdir(
+        self,
+        path: str,
+        parents: bool = True,
+        *,
+        permissions: Optional[int] = None,
+        user: Optional[str] = None
+    ):
+        """Create a directory. Supports optional permissions and ownership."""
         ...
 
     def rmdir(self, path: str):

@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Optional
-from darca_space_manager.core.interfaces.file_backend import FileBackend
+
+from darca_storage.client import StorageClient
 
 
 class StorageConnector(ABC):
@@ -8,25 +9,39 @@ class StorageConnector(ABC):
     Abstract interface for connecting to a storage backend.
 
     Implementations must:
-    - Connect and return a FileBackend.
-    - Verify the backend is available.
-    - Verify that access is permitted.
+    - Connect and return a scoped StorageClient rooted in a base path
+    - Verify the backend is available
+    - Verify that access is permitted
     """
 
     @abstractmethod
-    def connect(self) -> FileBackend:
-        """Return a FileBackend instance if connection succeeds."""
+    def connect(self) -> StorageClient:
+        """
+        Return a StorageClient instance scoped to the backend and base path.
+
+        Raises:
+            RuntimeError: if the connection cannot be established
+        """
         pass
 
     @abstractmethod
     def verify_connection(self) -> bool:
-        """Return True if the backend is reachable."""
+        """
+        Return True if the backend is reachable (e.g., path exists, endpoint responds).
+        """
         pass
 
     @abstractmethod
-    def verify_access(self, user: Optional[str] = None) -> bool:
+    def verify_access(
+        self,
+        user: Optional[str] = None,
+        permissions: Optional[int] = None,
+    ) -> bool:
         """
-        Return True if the user is permitted to access the root/base of the storage.
-        If user is None, check default environment context.
+        Return True if the user has access to the root/base of the storage.
+
+        Args:
+            user (Optional[str]): User context for ownership verification.
+            permissions (Optional[int]): Permission bits to apply when testing access.
         """
         pass
