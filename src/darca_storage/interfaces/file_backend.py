@@ -1,60 +1,91 @@
-from typing import List, Union, Protocol, Optional
+# src/darca_storage/interfaces/file_backend.py
+# License: MIT
+
+from typing import Protocol, Union, List, Optional
 
 
 class FileBackend(Protocol):
     """
-    Protocol for backend-agnostic file and directory operations.
+    Async-first contract for storage back-ends.
 
-    Implementations may target local filesystems, remote storage (e.g., S3),
-    or virtual in-memory stores. All paths are treated as opaque strings.
+    All operations are coroutines.  Concrete implementations may delegate to
+    thread-pool helpers or native async SDKs, but callers can always:
+
+        await backend.read(...)
     """
 
-    def read(self, path: str, binary: bool = False) -> Union[str, bytes]:
-        """Read the contents of a file. Binary flag may be ignored if backend supports auto-detection."""
+
+    async def read(self, path: str, *, binary: bool = False) -> Union[str, bytes]:
+        """
+        Return the full contents of *path*.
+
+        Args:
+            path: Absolute path of the file.
+            binary: If True, return bytes; otherwise decode as text.
+        """
         ...
 
-    def write(
+    async def write(
         self,
         path: str,
         content: Union[str, bytes],
         *,
+        binary: bool = False,
         permissions: Optional[int] = None,
-        user: Optional[str] = None
-    ):
-        """Write contents to a file. Overwrites if it exists. Supports optional permissions and ownership."""
+        user: Optional[str] = None,
+    ) -> None:
+        """
+        Overwrite or create *path* with *content*.
+
+        Optional:
+            permissions - chmod bits (e.g. 0o644)
+            user        - chown to given username (requires privilege)
+        """
         ...
 
-    def delete(self, path: str):
-        """Remove a file."""
+    async def delete(self, path: str) -> None:
+        """Remove a regular file."""
         ...
 
-    def exists(self, path: str) -> bool:
-        """Check whether the given file or directory exists."""
+    async def exists(self, path: str) -> bool:
+        """Return True if *path* exists (file or directory)."""
         ...
 
-    def list(self, base_path: str, recursive: bool = False) -> List[str]:
-        """List contents of a directory."""
+
+    async def list(self, base_path: str, *, recursive: bool = False) -> List[str]:
+        """
+        List directory *base_path*.
+
+        Returns:
+            List of paths, relative to *base_path* when recursive=True,
+            otherwise direct children.
+        """
         ...
 
-    def mkdir(
+    async def mkdir(
         self,
         path: str,
-        parents: bool = True,
         *,
+        parents: bool = True,
         permissions: Optional[int] = None,
-        user: Optional[str] = None
-    ):
-        """Create a directory. Supports optional permissions and ownership."""
+        user: Optional[str] = None,
+    ) -> None:
+        """Create directory *path* (and parents if requested)."""
         ...
 
-    def rmdir(self, path: str):
-        """Remove a directory recursively."""
+    async def rmdir(self, path: str) -> None:
+        """Recursively remove directory *path*."""
         ...
 
-    def rename(self, src: str, dest: str):
-        """Rename or move a file/directory."""
+    async def rename(self, src: str, dest: str) -> None:
+        """Move or rename a file/directory."""
         ...
 
-    def stat_mtime(self, path: str) -> float:
-        """Return the last modification time (epoch) of a file or directory."""
+    async def stat_mtime(self, path: str) -> float:
+        """
+        Return last-modified time (UNIX epoch seconds) for *path*.
+
+        Raises:
+            FileUtilsException if *path* does not exist.
+        """
         ...

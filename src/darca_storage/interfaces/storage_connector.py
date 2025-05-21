@@ -1,3 +1,18 @@
+# src/darca_storage/interfaces/storage_connector.py
+# License: MIT
+"""
+Async interface for creating scoped StorageClient instances.
+
+A connector encapsulates whatever is needed to reach a given storage backend
+(local path, S3 bucket, in-memory store…).  Implementations must:
+    • Verify the backend is reachable (`verify_connection`)
+    • Verify the caller has access rights (`verify_access`)
+    • Produce a ready-to-use `StorageClient` (`connect`)
+All three operations are *coroutines* so event-loop callers remain non-blocking.
+"""
+
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from typing import Optional
 
@@ -6,42 +21,51 @@ from darca_storage.client import StorageClient
 
 class StorageConnector(ABC):
     """
-    Abstract interface for connecting to a storage backend.
+    Abstract contract for connecting to any storage backend.
 
-    Implementations must:
-    - Connect and return a scoped StorageClient rooted in a base path
-    - Verify the backend is available
-    - Verify that access is permitted
+    Concrete implementations typically carry configuration (e.g. `base_path`
+    for local disk, bucket + credentials for S3) and perform lightweight
+    health checks before handing back a `StorageClient`.
     """
 
+    # ──────────────────────────── lifecycle ─────────────────────────── #
+
     @abstractmethod
-    def connect(self) -> StorageClient:
+    async def connect(self) -> StorageClient:
         """
-        Return a StorageClient instance scoped to the backend and base path.
+        Return a *scoped* async `StorageClient`.
 
         Raises:
-            RuntimeError: if the connection cannot be established
+            RuntimeError   - backend not reachable
+            PermissionError - access denied
         """
-        pass
+        ...
+
+    # ──────────────────────────── probes ────────────────────────────── #
 
     @abstractmethod
-    def verify_connection(self) -> bool:
+    async def verify_connection(self) -> bool:
         """
-        Return True if the backend is reachable (e.g., path exists, endpoint responds).
+        Lightweight check: does the backend exist / respond?
+
+        Examples:
+            • Local path exists
+            • S3 bucket HeadBucket succeeds
         """
-        pass
+        ...
 
     @abstractmethod
-    def verify_access(
+    async def verify_access(
         self,
+        *,
         user: Optional[str] = None,
         permissions: Optional[int] = None,
     ) -> bool:
         """
-        Return True if the user has access to the root/base of the storage.
+        Verify caller can create, write, and delete inside the backend root.
 
         Args:
-            user (Optional[str]): User context for ownership verification.
-            permissions (Optional[int]): Permission bits to apply when testing access.
+            user:        POSIX username to test chown operations (optional)
+            permissions: chmod bits to test permission propagation (optional)
         """
-        pass
+        ...
