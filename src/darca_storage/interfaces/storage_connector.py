@@ -16,7 +16,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from darca_storage.client import StorageClient
+from darca_storage.backends.local_file_backend import LocalFileBackend
 
 
 class StorageConnector(ABC):
@@ -31,7 +31,7 @@ class StorageConnector(ABC):
     # ──────────────────────────── lifecycle ─────────────────────────── #
 
     @abstractmethod
-    async def connect(self) -> StorageClient:
+    async def connect(self) -> LocalFileBackend:
         """
         Return a *scoped* async `StorageClient`.
 

@@ -19,6 +19,7 @@ from darca_file_utils.file_utils import FileUtils, FileUtilsException
 from darca_storage.backends.local_file_backend import LocalFileBackend
 from darca_storage.client import StorageClient
 from darca_storage.interfaces.storage_connector import StorageConnector
+from darca_storage.decorators.scoped_backend import ScopedFileBackend
 
 
 class LocalStorageConnector(StorageConnector):  # noqa: D101
@@ -28,14 +29,13 @@ class LocalStorageConnector(StorageConnector):  # noqa: D101
         self._base_path: str = os.path.abspath(base_path)
 
 
-    async def connect(self) -> StorageClient:
+    async def connect(self) -> LocalFileBackend:
         if not await self.verify_connection():
             raise RuntimeError(f"Local storage path '{self._base_path}' is not reachable.")
         if not await self.verify_access():
             raise PermissionError(f"Access to '{self._base_path}' is denied.")
-
-        backend = LocalFileBackend()
-        return StorageClient(backend=backend, base_path=self._base_path)
+        
+        return ScopedFileBackend(backend=LocalFileBackend(), base_path=self._base_path)
 
 
     async def verify_connection(self) -> bool:
