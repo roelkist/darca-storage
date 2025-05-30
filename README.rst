@@ -24,23 +24,6 @@ Storage intance with file operation support for multiple backends.
    :target: https://roelkist.github.io/darca-storage/
    :alt: GitHub Pages
 
-🚀 Overview
------------
-
-**darca-storage** provides a simple abstraction over local file storage by organizing content in logical "spaces".
-Each space has its own metadata and supports file-level operations such as reading, writing, deleting, and listing — including support for structured content like YAML and JSON.
-
-✨ Features
------------
-
-- Space creation, deletion, existence checks, and metadata tracking
-- File read/write/delete operations within a given space
-- Automatic handling of `.yaml`, `.yml`, and `.json` for dictionaries
-- Strict ASCII validation when reading text
-- Custom exceptions for robust error tracing (`SpaceFileManagerException`, `SpaceManagerException`)
-- Parallel-safe test fixtures (100% test coverage)
-- CI/CD pipelines, auto-doc generation, and live documentation via GitHub Pages
-
 📦 Installation
 ---------------
 
@@ -54,21 +37,6 @@ Or using Poetry:
 
    poetry add darca-storage
 
-🔧 Usage
---------
-
-.. code-block:: python
-
-   from darca_space_manager import SpaceManager, SpaceFileManager
-
-   sm = SpaceManager()
-   sfm = SpaceFileManager()
-
-   sm.create_space("demo")
-   sfm.set_file("demo", "example.yaml", {"foo": "bar"})
-   print(sfm.get_file("demo", "example.yaml"))  # raw text
-   sm.delete_space("demo")
-
 📚 Documentation
 ----------------
 
@@ -81,18 +49,6 @@ To build locally:
 .. code-block:: bash
 
    make docs
-
-📂 Project Layout
-------------------
-
-.. code-block::
-
-   darca_space_manager/
-   ├── config.py
-   ├── space_executor.py
-   ├── space_file_manager.py
-   ├── space_manager.py
-   └── __version__.py
 
 🧪 Testing
 ----------

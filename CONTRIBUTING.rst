@@ -1,4 +1,4 @@
-Contributing to darca-space-manager
+Contributing to darca-storage
 ===================================
 
 Thanks for your interest in contributing to **darca-space-manager** — a project by `Roel Kist <https://github.com/roelkist>`_.
@@ -52,9 +52,9 @@ Code Style
 
 This project enforces strict quality and consistency via:
 
-- **Black** – formatting
-- **Ruff** – linting and import sorting
-- **Mypy** – type checking
+- **Black** - formatting
+- **Ruff** - linting and import sorting
+- **Mypy** - type checking
 
 .. code-block:: bash
 

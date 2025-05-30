@@ -17,7 +17,6 @@ from typing import Optional
 from darca_file_utils.directory_utils import DirectoryUtils, DirectoryUtilsException
 from darca_file_utils.file_utils import FileUtils, FileUtilsException
 from darca_storage.backends.local_file_backend import LocalFileBackend
-from darca_storage.client import StorageClient
 from darca_storage.interfaces.storage_connector import StorageConnector
 from darca_storage.decorators.scoped_backend import ScopedFileBackend
 

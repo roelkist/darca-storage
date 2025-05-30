@@ -1,38 +1,22 @@
-.. darca-space-manager documentation master file
+.. darca-storage documentation master file
 
-Welcome to darca-space-manager
-==============================
+Welcome to darca-storage's documentation!
+=========================================
 
-Logical space management and execution framework.
+**darca-storage** provides a modular, async-first, file-backed storage interface
+with pluggable connectors and strong scoping guarantees.
 
-Readme
-------
+Designed for local and future cloud-native workloads, it offers:
 
-.. include:: ../../README.rst
-   
-
-Community & Contribution
-------------------------
-
-.. include:: ../../CONTRIBUTING.rst
-
-
-Overview
---------
-
-darca-space-manager provides high-level management of logical "spaces", including:
-
-- Creating and deleting spaces
-- Managing files inside spaces
-- Running commands inside spaces
-- Metadata and concurrency handling
-
-Contents
---------
+- Async-safe file operations
+- Scoped access control
+- URL-based backend configuration
+- Session-aware client abstraction
 
 .. toctree::
    :maxdepth: 2
+   :caption: Contents:
 
    usage
-   concepts
    api
+

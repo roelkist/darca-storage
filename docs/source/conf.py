@@ -36,7 +36,6 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.autodoc",
     "sphinxcontrib.plantuml",
-    'sphinx_autodoc_pydantic',
     "sphinx.ext.napoleon",
 ]
 
