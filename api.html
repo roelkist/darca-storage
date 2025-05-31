@@ -1,0 +1,842 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Reference &mdash; DARCA&#39;s storage abstraction for logical spaces. 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Usage Guide" href="usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            DARCA's storage abstraction for logical spaces.
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-darca_storage.client">Storage Client</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#darca_storage.client.StorageClient"><code class="docutils literal notranslate"><span class="pre">StorageClient</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.client.StorageClient.backend"><code class="docutils literal notranslate"><span class="pre">StorageClient.backend</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.client.StorageClient.context"><code class="docutils literal notranslate"><span class="pre">StorageClient.context()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.client.StorageClient.credentials"><code class="docutils literal notranslate"><span class="pre">StorageClient.credentials</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.client.StorageClient.delete"><code class="docutils literal notranslate"><span class="pre">StorageClient.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.client.StorageClient.exists"><code class="docutils literal notranslate"><span class="pre">StorageClient.exists()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.client.StorageClient.flush"><code class="docutils literal notranslate"><span class="pre">StorageClient.flush()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.client.StorageClient.list"><code class="docutils literal notranslate"><span class="pre">StorageClient.list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.client.StorageClient.mkdir"><code class="docutils literal notranslate"><span class="pre">StorageClient.mkdir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.client.StorageClient.presign_url"><code class="docutils literal notranslate"><span class="pre">StorageClient.presign_url()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.client.StorageClient.read"><code class="docutils literal notranslate"><span class="pre">StorageClient.read()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.client.StorageClient.refresh"><code class="docutils literal notranslate"><span class="pre">StorageClient.refresh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.client.StorageClient.rename"><code class="docutils literal notranslate"><span class="pre">StorageClient.rename()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.client.StorageClient.rmdir"><code class="docutils literal notranslate"><span class="pre">StorageClient.rmdir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.client.StorageClient.session"><code class="docutils literal notranslate"><span class="pre">StorageClient.session</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.client.StorageClient.stat_mtime"><code class="docutils literal notranslate"><span class="pre">StorageClient.stat_mtime()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.client.StorageClient.user"><code class="docutils literal notranslate"><span class="pre">StorageClient.user</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.client.StorageClient.write"><code class="docutils literal notranslate"><span class="pre">StorageClient.write()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-darca_storage.factory">Factory</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#darca_storage.factory.StorageConnectorFactory"><code class="docutils literal notranslate"><span class="pre">StorageConnectorFactory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.factory.StorageConnectorFactory.from_url"><code class="docutils literal notranslate"><span class="pre">StorageConnectorFactory.from_url()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-darca_storage.connectors.local">Connectors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#darca_storage.connectors.local.LocalStorageConnector"><code class="docutils literal notranslate"><span class="pre">LocalStorageConnector</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.connectors.local.LocalStorageConnector.base_path"><code class="docutils literal notranslate"><span class="pre">LocalStorageConnector.base_path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.connectors.local.LocalStorageConnector.connect"><code class="docutils literal notranslate"><span class="pre">LocalStorageConnector.connect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.connectors.local.LocalStorageConnector.inject_credentials"><code class="docutils literal notranslate"><span class="pre">LocalStorageConnector.inject_credentials()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.connectors.local.LocalStorageConnector.verify_access"><code class="docutils literal notranslate"><span class="pre">LocalStorageConnector.verify_access()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.connectors.local.LocalStorageConnector.verify_connection"><code class="docutils literal notranslate"><span class="pre">LocalStorageConnector.verify_connection()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-darca_storage.backends.local_file_backend">Backends</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#darca_storage.backends.local_file_backend.LocalFileBackend"><code class="docutils literal notranslate"><span class="pre">LocalFileBackend</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.backends.local_file_backend.LocalFileBackend.delete"><code class="docutils literal notranslate"><span class="pre">LocalFileBackend.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.backends.local_file_backend.LocalFileBackend.exists"><code class="docutils literal notranslate"><span class="pre">LocalFileBackend.exists()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.backends.local_file_backend.LocalFileBackend.list"><code class="docutils literal notranslate"><span class="pre">LocalFileBackend.list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.backends.local_file_backend.LocalFileBackend.mkdir"><code class="docutils literal notranslate"><span class="pre">LocalFileBackend.mkdir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.backends.local_file_backend.LocalFileBackend.read"><code class="docutils literal notranslate"><span class="pre">LocalFileBackend.read()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.backends.local_file_backend.LocalFileBackend.rename"><code class="docutils literal notranslate"><span class="pre">LocalFileBackend.rename()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.backends.local_file_backend.LocalFileBackend.rmdir"><code class="docutils literal notranslate"><span class="pre">LocalFileBackend.rmdir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.backends.local_file_backend.LocalFileBackend.stat_mtime"><code class="docutils literal notranslate"><span class="pre">LocalFileBackend.stat_mtime()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.backends.local_file_backend.LocalFileBackend.write"><code class="docutils literal notranslate"><span class="pre">LocalFileBackend.write()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-darca_storage.decorators.scoped_backend">Scoped Backend</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#darca_storage.decorators.scoped_backend.ScopedFileBackend"><code class="docutils literal notranslate"><span class="pre">ScopedFileBackend</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.decorators.scoped_backend.ScopedFileBackend.delete"><code class="docutils literal notranslate"><span class="pre">ScopedFileBackend.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.decorators.scoped_backend.ScopedFileBackend.exists"><code class="docutils literal notranslate"><span class="pre">ScopedFileBackend.exists()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.decorators.scoped_backend.ScopedFileBackend.list"><code class="docutils literal notranslate"><span class="pre">ScopedFileBackend.list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.decorators.scoped_backend.ScopedFileBackend.mkdir"><code class="docutils literal notranslate"><span class="pre">ScopedFileBackend.mkdir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.decorators.scoped_backend.ScopedFileBackend.read"><code class="docutils literal notranslate"><span class="pre">ScopedFileBackend.read()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.decorators.scoped_backend.ScopedFileBackend.rename"><code class="docutils literal notranslate"><span class="pre">ScopedFileBackend.rename()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.decorators.scoped_backend.ScopedFileBackend.rmdir"><code class="docutils literal notranslate"><span class="pre">ScopedFileBackend.rmdir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.decorators.scoped_backend.ScopedFileBackend.stat_mtime"><code class="docutils literal notranslate"><span class="pre">ScopedFileBackend.stat_mtime()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.decorators.scoped_backend.ScopedFileBackend.write"><code class="docutils literal notranslate"><span class="pre">ScopedFileBackend.write()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-darca_storage.interfaces.file_backend">Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#darca_storage.interfaces.file_backend.FileBackend"><code class="docutils literal notranslate"><span class="pre">FileBackend</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.interfaces.file_backend.FileBackend.delete"><code class="docutils literal notranslate"><span class="pre">FileBackend.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.interfaces.file_backend.FileBackend.exists"><code class="docutils literal notranslate"><span class="pre">FileBackend.exists()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.interfaces.file_backend.FileBackend.list"><code class="docutils literal notranslate"><span class="pre">FileBackend.list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.interfaces.file_backend.FileBackend.mkdir"><code class="docutils literal notranslate"><span class="pre">FileBackend.mkdir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.interfaces.file_backend.FileBackend.read"><code class="docutils literal notranslate"><span class="pre">FileBackend.read()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.interfaces.file_backend.FileBackend.rename"><code class="docutils literal notranslate"><span class="pre">FileBackend.rename()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.interfaces.file_backend.FileBackend.rmdir"><code class="docutils literal notranslate"><span class="pre">FileBackend.rmdir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.interfaces.file_backend.FileBackend.stat_mtime"><code class="docutils literal notranslate"><span class="pre">FileBackend.stat_mtime()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.interfaces.file_backend.FileBackend.write"><code class="docutils literal notranslate"><span class="pre">FileBackend.write()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#darca_storage.interfaces.storage_connector.StorageConnector"><code class="docutils literal notranslate"><span class="pre">StorageConnector</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.interfaces.storage_connector.StorageConnector.connect"><code class="docutils literal notranslate"><span class="pre">StorageConnector.connect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.interfaces.storage_connector.StorageConnector.verify_access"><code class="docutils literal notranslate"><span class="pre">StorageConnector.verify_access()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.interfaces.storage_connector.StorageConnector.verify_connection"><code class="docutils literal notranslate"><span class="pre">StorageConnector.verify_connection()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#darca_storage.interfaces.credential_aware.CredentialAware"><code class="docutils literal notranslate"><span class="pre">CredentialAware</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#darca_storage.interfaces.credential_aware.CredentialAware.inject_credentials"><code class="docutils literal notranslate"><span class="pre">CredentialAware.inject_credentials()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-darca_storage.exceptions">Exceptions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#darca_storage.exceptions.StorageClientPathViolation"><code class="docutils literal notranslate"><span class="pre">StorageClientPathViolation</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DARCA's storage abstraction for logical spaces.</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h1>
+<p>This section documents the internal components of <cite>darca-storage</cite>, including storage clients,
+connectors, file backends, scoping logic, and exception types.</p>
+<hr class="docutils" />
+<section id="module-darca_storage.client">
+<span id="storage-client"></span><h2>Storage Client<a class="headerlink" href="#module-darca_storage.client" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="darca_storage.client.StorageClient">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">darca_storage.client.</span></span><span class="sig-name descname"><span class="pre">StorageClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#darca_storage.interfaces.file_backend.FileBackend" title="darca_storage.interfaces.file_backend.FileBackend"><span class="pre">FileBackend</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">session_metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">credentials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/darca_storage/client.html#StorageClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.client.StorageClient" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#darca_storage.interfaces.file_backend.FileBackend" title="darca_storage.interfaces.file_backend.FileBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileBackend</span></code></a></p>
+<p>Session-aware client wrapping a ScopedFileBackend.</p>
+<dl class="simple">
+<dt>Implements the full FileBackend interface with added support for:</dt><dd><ul class="simple">
+<li><p>Session metadata</p></li>
+<li><p>Optional user and credential context</p></li>
+<li><p>Introspection and future hooks (e.g. refresh, flush, presign_url)</p></li>
+</ul>
+</dd>
+</dl>
+<p>All paths are relative to the scoped root directory
+enforced by the backend.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="darca_storage.client.StorageClient.backend">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">backend</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#darca_storage.interfaces.file_backend.FileBackend" title="darca_storage.interfaces.file_backend.FileBackend"><span class="pre">FileBackend</span></a></em><a class="headerlink" href="#darca_storage.client.StorageClient.backend" title="Link to this definition"></a></dt>
+<dd><p>Access the underlying backend (for diagnostics or chaining).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.client.StorageClient.context">
+<span class="sig-name descname"><span class="pre">context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/darca_storage/client.html#StorageClient.context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.client.StorageClient.context" title="Link to this definition"></a></dt>
+<dd><p>Return contextual information for debugging or observability.
+Redacts credentials by default.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="darca_storage.client.StorageClient.credentials">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">credentials</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#darca_storage.client.StorageClient.credentials" title="Link to this definition"></a></dt>
+<dd><p>Credentials associated with this session (if any).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.client.StorageClient.delete">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/client.html#StorageClient.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.client.StorageClient.delete" title="Link to this definition"></a></dt>
+<dd><p>Remove a regular file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.client.StorageClient.exists">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/darca_storage/client.html#StorageClient.exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.client.StorageClient.exists" title="Link to this definition"></a></dt>
+<dd><p>Return True if <em>path</em> exists (file or directory).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.client.StorageClient.flush">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">flush</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/client.html#StorageClient.flush"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.client.StorageClient.flush" title="Link to this definition"></a></dt>
+<dd><p>Hook for flushing buffered data to storage.
+Useful for future implementations (e.g., batching or append-only logs).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.client.StorageClient.list">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/darca_storage/client.html#StorageClient.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.client.StorageClient.list" title="Link to this definition"></a></dt>
+<dd><p>List directory <em>base_path</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of paths, relative to <em>base_path</em> when recursive=True,
+otherwise direct children.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.client.StorageClient.mkdir">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mkdir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">parents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permissions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/client.html#StorageClient.mkdir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.client.StorageClient.mkdir" title="Link to this definition"></a></dt>
+<dd><p>Create directory <em>path</em> (and parents if requested).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.client.StorageClient.presign_url">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">presign_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expires_in</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/client.html#StorageClient.presign_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.client.StorageClient.presign_url" title="Link to this definition"></a></dt>
+<dd><p>Generate a presigned download URL (only meaningful for cloud backends).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>URL string or None (default no-op).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.client.StorageClient.read">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytes</span></span></span><a class="reference internal" href="_modules/darca_storage/client.html#StorageClient.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.client.StorageClient.read" title="Link to this definition"></a></dt>
+<dd><p>Return the full contents of <em>path</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – Absolute path of the file.</p></li>
+<li><p><strong>binary</strong> – If True, return bytes; otherwise decode as text.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.client.StorageClient.refresh">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">refresh</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/client.html#StorageClient.refresh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.client.StorageClient.refresh" title="Link to this definition"></a></dt>
+<dd><p>Hook for refreshing credentials, tokens, or connections.
+Override in cloud-capable subclasses.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.client.StorageClient.rename">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src_relative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest_relative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/client.html#StorageClient.rename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.client.StorageClient.rename" title="Link to this definition"></a></dt>
+<dd><p>Move or rename a file/directory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.client.StorageClient.rmdir">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rmdir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/client.html#StorageClient.rmdir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.client.StorageClient.rmdir" title="Link to this definition"></a></dt>
+<dd><p>Recursively remove directory <em>path</em>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="darca_storage.client.StorageClient.session">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">session</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#darca_storage.client.StorageClient.session" title="Link to this definition"></a></dt>
+<dd><p>Arbitrary metadata describing the active storage session.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.client.StorageClient.stat_mtime">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stat_mtime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/darca_storage/client.html#StorageClient.stat_mtime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.client.StorageClient.stat_mtime" title="Link to this definition"></a></dt>
+<dd><p>Return last-modified time (UNIX epoch seconds) for <em>path</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>FileUtilsException if path does not exist.</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="darca_storage.client.StorageClient.user">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">user</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#darca_storage.client.StorageClient.user" title="Link to this definition"></a></dt>
+<dd><p>Logical user this session may be scoped to.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.client.StorageClient.write">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permissions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/client.html#StorageClient.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.client.StorageClient.write" title="Link to this definition"></a></dt>
+<dd><p>Overwrite or create <em>path</em> with <em>content</em>.</p>
+<dl class="simple">
+<dt>Optional:</dt><dd><p>permissions - chmod bits (e.g. 0o644)
+user        - chown to given username (requires privilege)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<hr class="docutils" />
+<section id="module-darca_storage.factory">
+<span id="factory"></span><h2>Factory<a class="headerlink" href="#module-darca_storage.factory" title="Link to this heading"></a></h2>
+<p>StorageConnectorFactory</p>
+<p>Resolves URL-based schemes (e.g. <a class="reference external" href="file:///data">file:///data</a>) into a connected,
+scoped StorageClient.</p>
+<p>This factory guarantees that all returned clients operate over a
+ScopedFileBackend,
+preventing directory traversal and enforcing per-root isolation.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="darca_storage.factory.StorageConnectorFactory">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">darca_storage.factory.</span></span><span class="sig-name descname"><span class="pre">StorageConnectorFactory</span></span><a class="reference internal" href="_modules/darca_storage/factory.html#StorageConnectorFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.factory.StorageConnectorFactory" title="Link to this definition"></a></dt>
+<dd><p>Entrypoint for resolving a URL into a ready-to-use StorageClient.</p>
+<p>Guarantees that the returned client uses a securely scoped backend.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.factory.StorageConnectorFactory.from_url">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">session_metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">credentials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#darca_storage.client.StorageClient" title="darca_storage.client.StorageClient"><span class="pre">StorageClient</span></a></span></span><a class="reference internal" href="_modules/darca_storage/factory.html#StorageConnectorFactory.from_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.factory.StorageConnectorFactory.from_url" title="Link to this definition"></a></dt>
+<dd><p>Parse a URL and return a connected, scoped StorageClient.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>) – A storage URL (e.g., <a class="reference external" href="file:///data">file:///data</a>)</p></li>
+<li><p><strong>session_metadata</strong> (<em>dict</em><em>, </em><em>optional</em>) – Metadata associated with</p></li>
+<li><p><strong>credentials</strong> (<em>this session</em>) – Credential map</p></li>
+<li><p><strong>(</strong><strong>e.g.</strong> – “…”, “token”: “…”})</p></li>
+<li><p><strong>{&quot;user&quot;</strong> – “…”, “token”: “…”})</p></li>
+<li><p><strong>parameters</strong> (<em>dict</em><em>, </em><em>optional</em>) – Additional connection parameters</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Session-aware client wrapping a ScopedFileBackend</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#darca_storage.client.StorageClient" title="darca_storage.client.StorageClient">StorageClient</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If the scheme is unsupported</p></li>
+<li><p><strong>RuntimeError</strong> – If backend returned is not safely scoped</p></li>
+<li><p><strong>PermissionError</strong> – If access to the base path is denied</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<hr class="docutils" />
+<section id="module-darca_storage.connectors.local">
+<span id="connectors"></span><h2>Connectors<a class="headerlink" href="#module-darca_storage.connectors.local" title="Link to this heading"></a></h2>
+<p>Async connector for a local-filesystem backend.</p>
+<ul class="simple">
+<li><p>Performs reachability and access probes without blocking the event-loop
+(<cite>asyncio.to_thread</cite>).</p></li>
+<li><p>Returns a ready-scoped <em>async</em> <cite>StorageClient</cite>.</p></li>
+<li><p>Supports credential injection (e.g. posix_user) via
+CredentialAware interface.</p></li>
+</ul>
+<dl class="py class">
+<dt class="sig sig-object py" id="darca_storage.connectors.local.LocalStorageConnector">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">darca_storage.connectors.local.</span></span><span class="sig-name descname"><span class="pre">LocalStorageConnector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">credentials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/darca_storage/connectors/local.html#LocalStorageConnector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.connectors.local.LocalStorageConnector" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#darca_storage.interfaces.storage_connector.StorageConnector" title="darca_storage.interfaces.storage_connector.StorageConnector"><code class="xref py py-class docutils literal notranslate"><span class="pre">StorageConnector</span></code></a>, <a class="reference internal" href="#darca_storage.interfaces.credential_aware.CredentialAware" title="darca_storage.interfaces.credential_aware.CredentialAware"><code class="xref py py-class docutils literal notranslate"><span class="pre">CredentialAware</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="darca_storage.connectors.local.LocalStorageConnector.base_path">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">base_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#darca_storage.connectors.local.LocalStorageConnector.base_path" title="Link to this definition"></a></dt>
+<dd><p>Absolute root directory this connector targets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.connectors.local.LocalStorageConnector.connect">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#darca_storage.decorators.scoped_backend.ScopedFileBackend" title="darca_storage.decorators.scoped_backend.ScopedFileBackend"><span class="pre">ScopedFileBackend</span></a></span></span><a class="reference internal" href="_modules/darca_storage/connectors/local.html#LocalStorageConnector.connect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.connectors.local.LocalStorageConnector.connect" title="Link to this definition"></a></dt>
+<dd><p>Return a SCOPED FileBackend instance, ready for use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>RuntimeError   - backend not reachable</strong> – </p></li>
+<li><p><strong>PermissionError - access denied</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Implementations MUST wrap raw backends with ScopedFileBackend
+(or equivalent)
+to enforce path confinement and prevent directory escape.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.connectors.local.LocalStorageConnector.inject_credentials">
+<span class="sig-name descname"><span class="pre">inject_credentials</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">credentials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/connectors/local.html#LocalStorageConnector.inject_credentials"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.connectors.local.LocalStorageConnector.inject_credentials" title="Link to this definition"></a></dt>
+<dd><p>Store credentials for downstream use (e.g., POSIX identity,
+audit context).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.connectors.local.LocalStorageConnector.verify_access">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">verify_access</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permissions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/darca_storage/connectors/local.html#LocalStorageConnector.verify_access"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.connectors.local.LocalStorageConnector.verify_access" title="Link to this definition"></a></dt>
+<dd><p>Attempt mkdir / touch / rm to prove we have RW access.</p>
+<p>Uses injected credentials if available (e.g. posix_user).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.connectors.local.LocalStorageConnector.verify_connection">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">verify_connection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/darca_storage/connectors/local.html#LocalStorageConnector.verify_connection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.connectors.local.LocalStorageConnector.verify_connection" title="Link to this definition"></a></dt>
+<dd><p>True if the directory exists.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<hr class="docutils" />
+<section id="module-darca_storage.backends.local_file_backend">
+<span id="backends"></span><h2>Backends<a class="headerlink" href="#module-darca_storage.backends.local_file_backend" title="Link to this heading"></a></h2>
+<p>Async local-disk backend that delegates to darca_file_utils under the hood,
+executed via asyncio.to_thread so the event-loop remains free.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="darca_storage.backends.local_file_backend.LocalFileBackend">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">darca_storage.backends.local_file_backend.</span></span><span class="sig-name descname"><span class="pre">LocalFileBackend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/darca_storage/backends/local_file_backend.html#LocalFileBackend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.backends.local_file_backend.LocalFileBackend" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#darca_storage.interfaces.file_backend.FileBackend" title="darca_storage.interfaces.file_backend.FileBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileBackend</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.backends.local_file_backend.LocalFileBackend.delete">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/backends/local_file_backend.html#LocalFileBackend.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.backends.local_file_backend.LocalFileBackend.delete" title="Link to this definition"></a></dt>
+<dd><p>Remove a regular file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.backends.local_file_backend.LocalFileBackend.exists">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/darca_storage/backends/local_file_backend.html#LocalFileBackend.exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.backends.local_file_backend.LocalFileBackend.exists" title="Link to this definition"></a></dt>
+<dd><p>Return True if <em>path</em> exists (file or directory).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.backends.local_file_backend.LocalFileBackend.list">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/darca_storage/backends/local_file_backend.html#LocalFileBackend.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.backends.local_file_backend.LocalFileBackend.list" title="Link to this definition"></a></dt>
+<dd><p>List directory <em>base_path</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of paths, relative to <em>base_path</em> when recursive=True,
+otherwise direct children.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.backends.local_file_backend.LocalFileBackend.mkdir">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mkdir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">parents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permissions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/backends/local_file_backend.html#LocalFileBackend.mkdir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.backends.local_file_backend.LocalFileBackend.mkdir" title="Link to this definition"></a></dt>
+<dd><p>Create directory <em>path</em> (and parents if requested).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.backends.local_file_backend.LocalFileBackend.read">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytes</span></span></span><a class="reference internal" href="_modules/darca_storage/backends/local_file_backend.html#LocalFileBackend.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.backends.local_file_backend.LocalFileBackend.read" title="Link to this definition"></a></dt>
+<dd><p>Return the full contents of <em>path</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – Absolute path of the file.</p></li>
+<li><p><strong>binary</strong> – If True, return bytes; otherwise decode as text.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.backends.local_file_backend.LocalFileBackend.rename">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/backends/local_file_backend.html#LocalFileBackend.rename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.backends.local_file_backend.LocalFileBackend.rename" title="Link to this definition"></a></dt>
+<dd><p>Move or rename a file/directory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.backends.local_file_backend.LocalFileBackend.rmdir">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rmdir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/backends/local_file_backend.html#LocalFileBackend.rmdir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.backends.local_file_backend.LocalFileBackend.rmdir" title="Link to this definition"></a></dt>
+<dd><p>Recursively remove directory <em>path</em>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.backends.local_file_backend.LocalFileBackend.stat_mtime">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stat_mtime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/darca_storage/backends/local_file_backend.html#LocalFileBackend.stat_mtime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.backends.local_file_backend.LocalFileBackend.stat_mtime" title="Link to this definition"></a></dt>
+<dd><p>Return last-modified time (UNIX epoch seconds) for <em>path</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>FileUtilsException if path does not exist.</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.backends.local_file_backend.LocalFileBackend.write">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permissions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/backends/local_file_backend.html#LocalFileBackend.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.backends.local_file_backend.LocalFileBackend.write" title="Link to this definition"></a></dt>
+<dd><p>Overwrite or create <em>path</em> with <em>content</em>.</p>
+<dl class="simple">
+<dt>Optional:</dt><dd><p>permissions - chmod bits (e.g. 0o644)
+user        - chown to given username (requires privilege)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<hr class="docutils" />
+<section id="module-darca_storage.decorators.scoped_backend">
+<span id="scoped-backend"></span><h2>Scoped Backend<a class="headerlink" href="#module-darca_storage.decorators.scoped_backend" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="darca_storage.decorators.scoped_backend.ScopedFileBackend">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">darca_storage.decorators.scoped_backend.</span></span><span class="sig-name descname"><span class="pre">ScopedFileBackend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#darca_storage.interfaces.file_backend.FileBackend" title="darca_storage.interfaces.file_backend.FileBackend"><span class="pre">FileBackend</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/darca_storage/decorators/scoped_backend.html#ScopedFileBackend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.decorators.scoped_backend.ScopedFileBackend" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#darca_storage.interfaces.file_backend.FileBackend" title="darca_storage.interfaces.file_backend.FileBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileBackend</span></code></a></p>
+<p>Scoped façade over a FileBackend.</p>
+<p>Every path the caller supplies is interpreted <em>relative</em> to <cite>base_path</cite> and
+is first normalised through <cite>_full_path</cite> to prevent path-escape attacks.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.decorators.scoped_backend.ScopedFileBackend.delete">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/decorators/scoped_backend.html#ScopedFileBackend.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.decorators.scoped_backend.ScopedFileBackend.delete" title="Link to this definition"></a></dt>
+<dd><p>Remove a regular file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.decorators.scoped_backend.ScopedFileBackend.exists">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/darca_storage/decorators/scoped_backend.html#ScopedFileBackend.exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.decorators.scoped_backend.ScopedFileBackend.exists" title="Link to this definition"></a></dt>
+<dd><p>Return True if <em>path</em> exists (file or directory).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.decorators.scoped_backend.ScopedFileBackend.list">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/darca_storage/decorators/scoped_backend.html#ScopedFileBackend.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.decorators.scoped_backend.ScopedFileBackend.list" title="Link to this definition"></a></dt>
+<dd><p>List directory <em>base_path</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of paths, relative to <em>base_path</em> when recursive=True,
+otherwise direct children.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.decorators.scoped_backend.ScopedFileBackend.mkdir">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mkdir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">parents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permissions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/decorators/scoped_backend.html#ScopedFileBackend.mkdir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.decorators.scoped_backend.ScopedFileBackend.mkdir" title="Link to this definition"></a></dt>
+<dd><p>Create directory <em>path</em> (and parents if requested).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.decorators.scoped_backend.ScopedFileBackend.read">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytes</span></span></span><a class="reference internal" href="_modules/darca_storage/decorators/scoped_backend.html#ScopedFileBackend.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.decorators.scoped_backend.ScopedFileBackend.read" title="Link to this definition"></a></dt>
+<dd><p>Return the full contents of <em>path</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – Absolute path of the file.</p></li>
+<li><p><strong>binary</strong> – If True, return bytes; otherwise decode as text.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.decorators.scoped_backend.ScopedFileBackend.rename">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src_relative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest_relative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/decorators/scoped_backend.html#ScopedFileBackend.rename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.decorators.scoped_backend.ScopedFileBackend.rename" title="Link to this definition"></a></dt>
+<dd><p>Move or rename a file/directory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.decorators.scoped_backend.ScopedFileBackend.rmdir">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rmdir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/decorators/scoped_backend.html#ScopedFileBackend.rmdir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.decorators.scoped_backend.ScopedFileBackend.rmdir" title="Link to this definition"></a></dt>
+<dd><p>Recursively remove directory <em>path</em>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.decorators.scoped_backend.ScopedFileBackend.stat_mtime">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stat_mtime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/darca_storage/decorators/scoped_backend.html#ScopedFileBackend.stat_mtime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.decorators.scoped_backend.ScopedFileBackend.stat_mtime" title="Link to this definition"></a></dt>
+<dd><p>Return last-modified time (UNIX epoch seconds) for <em>path</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>FileUtilsException if path does not exist.</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.decorators.scoped_backend.ScopedFileBackend.write">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permissions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/decorators/scoped_backend.html#ScopedFileBackend.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.decorators.scoped_backend.ScopedFileBackend.write" title="Link to this definition"></a></dt>
+<dd><p>Overwrite or create <em>path</em> with <em>content</em>.</p>
+<dl class="simple">
+<dt>Optional:</dt><dd><p>permissions - chmod bits (e.g. 0o644)
+user        - chown to given username (requires privilege)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<hr class="docutils" />
+<section id="module-darca_storage.interfaces.file_backend">
+<span id="interfaces"></span><h2>Interfaces<a class="headerlink" href="#module-darca_storage.interfaces.file_backend" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="darca_storage.interfaces.file_backend.FileBackend">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">darca_storage.interfaces.file_backend.</span></span><span class="sig-name descname"><span class="pre">FileBackend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/darca_storage/interfaces/file_backend.html#FileBackend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.interfaces.file_backend.FileBackend" title="Link to this definition"></a></dt>
+<dd><p>Async-first contract for storage back-ends.</p>
+<p>All operations are coroutines.  Concrete implementations may delegate to
+thread-pool helpers or native async SDKs, but callers can always:</p>
+<blockquote>
+<div><p>await backend.read(…)</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.interfaces.file_backend.FileBackend.delete">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/interfaces/file_backend.html#FileBackend.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.interfaces.file_backend.FileBackend.delete" title="Link to this definition"></a></dt>
+<dd><p>Remove a regular file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.interfaces.file_backend.FileBackend.exists">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/darca_storage/interfaces/file_backend.html#FileBackend.exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.interfaces.file_backend.FileBackend.exists" title="Link to this definition"></a></dt>
+<dd><p>Return True if <em>path</em> exists (file or directory).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.interfaces.file_backend.FileBackend.list">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/darca_storage/interfaces/file_backend.html#FileBackend.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.interfaces.file_backend.FileBackend.list" title="Link to this definition"></a></dt>
+<dd><p>List directory <em>base_path</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of paths, relative to <em>base_path</em> when recursive=True,
+otherwise direct children.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.interfaces.file_backend.FileBackend.mkdir">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mkdir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">parents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permissions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/interfaces/file_backend.html#FileBackend.mkdir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.interfaces.file_backend.FileBackend.mkdir" title="Link to this definition"></a></dt>
+<dd><p>Create directory <em>path</em> (and parents if requested).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.interfaces.file_backend.FileBackend.read">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytes</span></span></span><a class="reference internal" href="_modules/darca_storage/interfaces/file_backend.html#FileBackend.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.interfaces.file_backend.FileBackend.read" title="Link to this definition"></a></dt>
+<dd><p>Return the full contents of <em>path</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – Absolute path of the file.</p></li>
+<li><p><strong>binary</strong> – If True, return bytes; otherwise decode as text.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.interfaces.file_backend.FileBackend.rename">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/interfaces/file_backend.html#FileBackend.rename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.interfaces.file_backend.FileBackend.rename" title="Link to this definition"></a></dt>
+<dd><p>Move or rename a file/directory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.interfaces.file_backend.FileBackend.rmdir">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rmdir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/interfaces/file_backend.html#FileBackend.rmdir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.interfaces.file_backend.FileBackend.rmdir" title="Link to this definition"></a></dt>
+<dd><p>Recursively remove directory <em>path</em>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.interfaces.file_backend.FileBackend.stat_mtime">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stat_mtime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/darca_storage/interfaces/file_backend.html#FileBackend.stat_mtime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.interfaces.file_backend.FileBackend.stat_mtime" title="Link to this definition"></a></dt>
+<dd><p>Return last-modified time (UNIX epoch seconds) for <em>path</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>FileUtilsException if path does not exist.</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.interfaces.file_backend.FileBackend.write">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permissions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/interfaces/file_backend.html#FileBackend.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.interfaces.file_backend.FileBackend.write" title="Link to this definition"></a></dt>
+<dd><p>Overwrite or create <em>path</em> with <em>content</em>.</p>
+<dl class="simple">
+<dt>Optional:</dt><dd><p>permissions - chmod bits (e.g. 0o644)
+user        - chown to given username (requires privilege)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-darca_storage.interfaces.storage_connector">Async interface for creating scoped StorageClient instances.</p>
+<p>A connector encapsulates whatever is needed to reach a given storage backend
+(local path, S3 bucket, in-memory store…).  Implementations must:
+- Verify the backend is reachable (<cite>verify_connection</cite>)
+- Verify the caller has access rights (<cite>verify_access</cite>)
+- Produce a ready-to-use <cite>StorageClient</cite> (<cite>connect</cite>)
+All three operations are <em>coroutines</em> so event-loop callers remain
+non-blocking.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="darca_storage.interfaces.storage_connector.StorageConnector">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">darca_storage.interfaces.storage_connector.</span></span><span class="sig-name descname"><span class="pre">StorageConnector</span></span><a class="reference internal" href="_modules/darca_storage/interfaces/storage_connector.html#StorageConnector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.interfaces.storage_connector.StorageConnector" title="Link to this definition"></a></dt>
+<dd><p>Abstract contract for connecting to any storage backend.</p>
+<p>Concrete implementations typically carry configuration (e.g. <cite>base_path</cite>
+for local disk, bucket + credentials for S3) and perform lightweight
+health checks before handing back a <cite>StorageClient</cite>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.interfaces.storage_connector.StorageConnector.connect">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#darca_storage.backends.local_file_backend.LocalFileBackend" title="darca_storage.backends.local_file_backend.LocalFileBackend"><span class="pre">LocalFileBackend</span></a></span></span><a class="reference internal" href="_modules/darca_storage/interfaces/storage_connector.html#StorageConnector.connect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.interfaces.storage_connector.StorageConnector.connect" title="Link to this definition"></a></dt>
+<dd><p>Return a SCOPED FileBackend instance, ready for use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>RuntimeError   - backend not reachable</strong> – </p></li>
+<li><p><strong>PermissionError - access denied</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Implementations MUST wrap raw backends with ScopedFileBackend
+(or equivalent)
+to enforce path confinement and prevent directory escape.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.interfaces.storage_connector.StorageConnector.verify_access">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">verify_access</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permissions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/darca_storage/interfaces/storage_connector.html#StorageConnector.verify_access"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.interfaces.storage_connector.StorageConnector.verify_access" title="Link to this definition"></a></dt>
+<dd><p>Verify caller can create, write, and delete inside the backend root.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – POSIX username to test chown operations (optional)</p></li>
+<li><p><strong>permissions</strong> – chmod bits to test permission propagation (optional)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.interfaces.storage_connector.StorageConnector.verify_connection">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">verify_connection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/darca_storage/interfaces/storage_connector.html#StorageConnector.verify_connection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.interfaces.storage_connector.StorageConnector.verify_connection" title="Link to this definition"></a></dt>
+<dd><p>Lightweight check: does the backend exist / respond?</p>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>Local path exists</p></li>
+<li><p>S3 bucket HeadBucket succeeds</p></li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-darca_storage.interfaces.credential_aware">
+<dt class="sig sig-object py" id="darca_storage.interfaces.credential_aware.CredentialAware">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">darca_storage.interfaces.credential_aware.</span></span><span class="sig-name descname"><span class="pre">CredentialAware</span></span><a class="reference internal" href="_modules/darca_storage/interfaces/credential_aware.html#CredentialAware"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.interfaces.credential_aware.CredentialAware" title="Link to this definition"></a></dt>
+<dd><p>Interface for backends or connectors that accept runtime credentials.</p>
+<p>Implementations may use credentials for authentication, authorization,
+token exchange, scoped access, or other runtime configuration.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="darca_storage.interfaces.credential_aware.CredentialAware.inject_credentials">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inject_credentials</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">credentials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/darca_storage/interfaces/credential_aware.html#CredentialAware.inject_credentials"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.interfaces.credential_aware.CredentialAware.inject_credentials" title="Link to this definition"></a></dt>
+<dd><p>Provide credential material to the backend or connector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>credentials</strong> (<em>dict</em>) – Key-value credential map</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<hr class="docutils" />
+<section id="module-darca_storage.exceptions">
+<span id="exceptions"></span><h2>Exceptions<a class="headerlink" href="#module-darca_storage.exceptions" title="Link to this heading"></a></h2>
+<dl class="py exception">
+<dt class="sig sig-object py" id="darca_storage.exceptions.StorageClientPathViolation">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">darca_storage.exceptions.</span></span><span class="sig-name descname"><span class="pre">StorageClientPathViolation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attempted_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/darca_storage/exceptions.html#StorageClientPathViolation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#darca_storage.exceptions.StorageClientPathViolation" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">DarcaException</span></code></p>
+<p>Raised when a requested path escapes the storage client’s base boundary.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="usage.html" class="btn btn-neutral float-left" title="Usage Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright (c) 2025 darca-storage Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,210 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>darca_storage.factory &mdash; DARCA&#39;s storage abstraction for logical spaces. 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            DARCA's storage abstraction for logical spaces.
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">DARCA's storage abstraction for logical spaces.</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">darca_storage.factory</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for darca_storage.factory</h1><div class="highlight"><pre>
+<span></span><span class="c1"># darca_storage/factory.py</span>
+<span class="c1"># License: MIT</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">StorageConnectorFactory</span>
+
+<span class="sd">Resolves URL-based schemes (e.g. file:///data) into a connected,</span>
+<span class="sd">scoped StorageClient.</span>
+
+<span class="sd">This factory guarantees that all returned clients operate over a</span>
+<span class="sd">ScopedFileBackend,</span>
+<span class="sd">preventing directory traversal and enforcing per-root isolation.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">urllib.parse</span><span class="w"> </span><span class="kn">import</span> <span class="n">unquote</span><span class="p">,</span> <span class="n">urlparse</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">darca_storage.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">StorageClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">darca_storage.connectors.local</span><span class="w"> </span><span class="kn">import</span> <span class="n">LocalStorageConnector</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">darca_storage.decorators.scoped_backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">ScopedFileBackend</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">darca_storage.interfaces.credential_aware</span><span class="w"> </span><span class="kn">import</span> <span class="n">CredentialAware</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">darca_storage.interfaces.file_backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileBackend</span>
+
+
+<div class="viewcode-block" id="StorageConnectorFactory">
+<a class="viewcode-back" href="../../api.html#darca_storage.factory.StorageConnectorFactory">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">StorageConnectorFactory</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Entrypoint for resolving a URL into a ready-to-use StorageClient.</span>
+
+<span class="sd">    Guarantees that the returned client uses a securely scoped backend.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="StorageConnectorFactory.from_url">
+<a class="viewcode-back" href="../../api.html#darca_storage.factory.StorageConnectorFactory.from_url">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">from_url</span><span class="p">(</span>
+        <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">session_metadata</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">credentials</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">parameters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StorageClient</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse a URL and return a connected, scoped StorageClient.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            url (str): A storage URL (e.g., file:///data)</span>
+<span class="sd">            session_metadata (dict, optional): Metadata associated with</span>
+<span class="sd">            this session credentials (dict, optional): Credential map</span>
+<span class="sd">            (e.g., {&quot;user&quot;: &quot;...&quot;, &quot;token&quot;: &quot;...&quot;})</span>
+<span class="sd">            parameters (dict, optional): Additional connection parameters</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            StorageClient: Session-aware client wrapping a ScopedFileBackend</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the scheme is unsupported</span>
+<span class="sd">            RuntimeError: If backend returned is not safely scoped</span>
+<span class="sd">            PermissionError: If access to the base path is denied</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">parsed</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">scheme</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">scheme</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">unquote</span><span class="p">(</span><span class="n">parsed</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">scheme</span> <span class="o">==</span> <span class="s2">&quot;file&quot;</span><span class="p">:</span>
+            <span class="n">base_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">path</span> <span class="ow">or</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
+
+            <span class="n">connector</span> <span class="o">=</span> <span class="n">LocalStorageConnector</span><span class="p">(</span>
+                <span class="n">base_path</span><span class="o">=</span><span class="n">base_path</span><span class="p">,</span>
+                <span class="n">credentials</span><span class="o">=</span><span class="n">credentials</span><span class="p">,</span>
+                <span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Inject credentials if the connector supports it</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">connector</span><span class="p">,</span> <span class="n">CredentialAware</span><span class="p">)</span> <span class="ow">and</span> <span class="n">credentials</span><span class="p">:</span>
+                <span class="n">connector</span><span class="o">.</span><span class="n">inject_credentials</span><span class="p">(</span><span class="n">credentials</span><span class="p">)</span>
+
+            <span class="n">backend</span><span class="p">:</span> <span class="n">FileBackend</span> <span class="o">=</span> <span class="k">await</span> <span class="n">connector</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+            <span class="c1"># Enforce scoped backend invariant</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">backend</span><span class="p">,</span> <span class="n">ScopedFileBackend</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Connector &#39;</span><span class="si">{</span><span class="n">connector</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39; returned &quot;</span>
+                    <span class="s2">&quot;an unscoped backend. &quot;</span>
+                    <span class="s2">&quot;All backends must be wrapped in ScopedFileBackend to &quot;</span>
+                    <span class="s2">&quot;ensure path isolation.&quot;</span>
+                <span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">StorageClient</span><span class="p">(</span>
+                <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span>
+                <span class="n">session_metadata</span><span class="o">=</span><span class="p">{</span>
+                    <span class="o">**</span><span class="p">(</span><span class="n">session_metadata</span> <span class="ow">or</span> <span class="p">{}),</span>
+                    <span class="s2">&quot;scheme&quot;</span><span class="p">:</span> <span class="s2">&quot;file&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;base_path&quot;</span><span class="p">:</span> <span class="n">base_path</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="n">credentials</span><span class="o">=</span><span class="n">credentials</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported storage scheme: &#39;</span><span class="si">{</span><span class="n">scheme</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright (c) 2025 darca-storage Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
