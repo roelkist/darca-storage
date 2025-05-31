@@ -1,7 +1,7 @@
 # src/darca_storage/interfaces/file_backend.py
-# License: MIT 
+# License: MIT
 
-from typing import Protocol, Union, List, Optional
+from typing import List, Optional, Protocol, Union
 
 
 class FileBackend(Protocol):
@@ -14,8 +14,9 @@ class FileBackend(Protocol):
         await backend.read(...)
     """
 
-
-    async def read(self, path: str, *, binary: bool = False) -> Union[str, bytes]:
+    async def read(
+        self, path: str, *, binary: bool = False
+    ) -> Union[str, bytes]:
         """
         Return the full contents of *path*.
 
@@ -51,8 +52,9 @@ class FileBackend(Protocol):
         """Return True if *path* exists (file or directory)."""
         ...
 
-
-    async def list(self, base_path: str, *, recursive: bool = False) -> List[str]:
+    async def list(
+        self, base_path: str, *, recursive: bool = False
+    ) -> List[str]:
         """
         List directory *base_path*.
 

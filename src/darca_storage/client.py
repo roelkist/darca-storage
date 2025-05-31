@@ -1,7 +1,8 @@
 # darca_storage/client.py
 
 from __future__ import annotations
-from typing import Union, Optional, List, Dict, Any
+
+from typing import Any, Dict, List, Optional, Union
 
 from darca_storage.interfaces.file_backend import FileBackend
 
@@ -15,7 +16,8 @@ class StorageClient(FileBackend):
       - Optional user and credential context
       - Introspection and future hooks (e.g. refresh, flush, presign_url)
 
-    All paths are relative to the scoped root directory enforced by the backend.
+    All paths are relative to the scoped root directory
+    enforced by the backend.
     """
 
     def __init__(
@@ -31,10 +33,12 @@ class StorageClient(FileBackend):
         self._user = user
         self._credentials = credentials or {}
 
-    # ─── FILEBACKEND INTERFACE IMPLEMENTATION ─────────────────────────────────────
-
-    async def read(self, relative_path: str, *, binary: bool = False) -> Union[str, bytes]:
-        return await self._backend.read(relative_path=relative_path, binary=binary)
+    async def read(
+        self, relative_path: str, *, binary: bool = False
+    ) -> Union[str, bytes]:
+        return await self._backend.read(
+            relative_path=relative_path, binary=binary
+        )
 
     async def write(
         self,
@@ -62,7 +66,9 @@ class StorageClient(FileBackend):
     async def list(
         self, relative_path: str = ".", *, recursive: bool = False
     ) -> List[str]:
-        return await self._backend.list(relative_path=relative_path, recursive=recursive)
+        return await self._backend.list(
+            relative_path=relative_path, recursive=recursive
+        )
 
     async def mkdir(
         self,
@@ -90,8 +96,6 @@ class StorageClient(FileBackend):
 
     async def stat_mtime(self, relative_path: str) -> float:
         return await self._backend.stat_mtime(relative_path=relative_path)
-
-    # ─── SESSION METADATA AND EXTENSION HOOKS ─────────────────────────────────────
 
     @property
     def backend(self) -> FileBackend:
@@ -122,7 +126,11 @@ class StorageClient(FileBackend):
             "user": self._user,
             "session_metadata": self._session_metadata,
             "backend_type": type(self._backend).__name__,
-            "credentials": {k: "***" for k in self._credentials} if self._credentials else None,
+            "credentials": (
+                {k: "***" for k in self._credentials}
+                if self._credentials
+                else None
+            ),
         }
 
     async def refresh(self) -> None:
@@ -139,7 +147,9 @@ class StorageClient(FileBackend):
         """
         pass
 
-    async def presign_url(self, relative_path: str, expires_in: int) -> Optional[str]:
+    async def presign_url(
+        self, relative_path: str, expires_in: int
+    ) -> Optional[str]:
         """
         Generate a presigned download URL (only meaningful for cloud backends).
 

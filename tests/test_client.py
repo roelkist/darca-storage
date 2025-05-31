@@ -1,7 +1,8 @@
 # tests/test_client.py
 
-import pytest
 from unittest.mock import AsyncMock, MagicMock
+
+import pytest
 
 from darca_storage.client import StorageClient
 
@@ -28,7 +29,7 @@ def client(mock_backend):
     return StorageClient(
         backend=mock_backend,
         session_metadata={"env": "test"},
-        user="test-user"
+        user="test-user",
     )
 
 
@@ -36,7 +37,9 @@ def client(mock_backend):
 async def test_read(client):
     result = await client.read("file.txt")
     assert result == "mocked-content"
-    client.backend.read.assert_awaited_once_with(relative_path="file.txt", binary=False)
+    client.backend.read.assert_awaited_once_with(
+        relative_path="file.txt", binary=False
+    )
 
 
 @pytest.mark.asyncio
@@ -67,7 +70,9 @@ async def test_exists(client):
 async def test_list(client):
     files = await client.list("folder", recursive=True)
     assert files == ["a.txt", "b.txt"]
-    client.backend.list.assert_awaited_once_with(relative_path="folder", recursive=True)
+    client.backend.list.assert_awaited_once_with(
+        relative_path="folder", recursive=True
+    )
 
 
 @pytest.mark.asyncio
@@ -91,8 +96,7 @@ async def test_rmdir(client):
 async def test_rename(client):
     await client.rename("src.txt", "dst.txt")
     client.backend.rename.assert_awaited_once_with(
-        src_relative="src.txt",
-        dest_relative="dst.txt"
+        src_relative="src.txt", dest_relative="dst.txt"
     )
 
 
@@ -100,7 +104,9 @@ async def test_rename(client):
 async def test_stat_mtime(client):
     mtime = await client.stat_mtime("data.txt")
     assert mtime == 1234567890.0
-    client.backend.stat_mtime.assert_awaited_once_with(relative_path="data.txt")
+    client.backend.stat_mtime.assert_awaited_once_with(
+        relative_path="data.txt"
+    )
 
 
 @pytest.mark.asyncio

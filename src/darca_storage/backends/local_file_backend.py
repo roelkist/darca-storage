@@ -13,14 +13,19 @@ from typing import List, Optional, Union
 
 from darca_file_utils.directory_utils import DirectoryUtils
 from darca_file_utils.file_utils import FileUtils, FileUtilsException
+
 from darca_storage.interfaces.file_backend import FileBackend
 
 
 class LocalFileBackend(FileBackend):  # noqa: D101  (docstring inherited)
 
-    async def read(self, path: str, *, binary: bool = False) -> Union[str, bytes]:
+    async def read(
+        self, path: str, *, binary: bool = False
+    ) -> Union[str, bytes]:
         # FileUtils.read_file auto-detects binary vs text
-        return await asyncio.to_thread(FileUtils.read_file, file_path=path, binary=binary)
+        return await asyncio.to_thread(
+            FileUtils.read_file, file_path=path, binary=binary
+        )
 
     async def write(
         self,
@@ -45,11 +50,13 @@ class LocalFileBackend(FileBackend):  # noqa: D101  (docstring inherited)
 
     async def exists(self, path: str) -> bool:
         return await asyncio.to_thread(
-            lambda p=path: FileUtils.file_exist(p) or DirectoryUtils.directory_exist(p)
+            lambda p=path: FileUtils.file_exist(p)
+            or DirectoryUtils.directory_exist(p)
         )
 
-
-    async def list(self, base_path: str, *, recursive: bool = False) -> List[str]:
+    async def list(
+        self, base_path: str, *, recursive: bool = False
+    ) -> List[str]:
         return await asyncio.to_thread(
             DirectoryUtils.list_directory, base_path, recursive
         )

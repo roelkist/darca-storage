@@ -1,9 +1,10 @@
 # src/darca_storage/decorators/scoped_backend.py
 
 import os
-from darca_storage.interfaces.file_backend import FileBackend
+from typing import List, Optional, Union
+
 from darca_storage.exceptions import StorageClientPathViolation
-from typing import Union, Optional, List
+from darca_storage.interfaces.file_backend import FileBackend
 
 
 class ScopedFileBackend(FileBackend):
@@ -18,14 +19,13 @@ class ScopedFileBackend(FileBackend):
         self._backend: FileBackend = backend
         self._base_path: str = os.path.abspath(base_path)
 
-
     def _full_path(self, relative_path: str) -> str:
         """
         Resolve *relative_path* against `self._base_path` and reject escapes.
 
         Raises:
-            StorageClientPathViolation - when traversal attempts to break out of
-            the scoped root (e.g. '../../etc/passwd').
+            StorageClientPathViolation - when traversal attempts to break
+            out of the scoped root (e.g. '../../etc/passwd').
         """
         full = os.path.realpath(
             os.path.abspath(os.path.join(self._base_path, relative_path))
@@ -33,12 +33,17 @@ class ScopedFileBackend(FileBackend):
         base = os.path.realpath(self._base_path)
 
         if not (full == base or full.startswith(base + os.sep)):
-            raise StorageClientPathViolation(attempted_path=full, base_path=base)
+            raise StorageClientPathViolation(
+                attempted_path=full, base_path=base
+            )
         return full
 
-
-    async def read(self, relative_path: str, *, binary: bool = False) -> Union[str, bytes]:
-        return await self._backend.read(self._full_path(relative_path), binary=binary)
+    async def read(
+        self, relative_path: str, *, binary: bool = False
+    ) -> Union[str, bytes]:
+        return await self._backend.read(
+            self._full_path(relative_path), binary=binary
+        )
 
     async def write(
         self,
@@ -69,7 +74,9 @@ class ScopedFileBackend(FileBackend):
         *,
         recursive: bool = False,
     ) -> List[str]:
-        return await self._backend.list(self._full_path(relative_path), recursive=recursive)
+        return await self._backend.list(
+            self._full_path(relative_path), recursive=recursive
+        )
 
     async def mkdir(
         self,

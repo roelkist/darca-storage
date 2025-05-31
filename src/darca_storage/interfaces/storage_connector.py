@@ -1,5 +1,5 @@
 # src/darca_storage/interfaces/storage_connector.py
-# License: MIT 
+# License: MIT
 """
 Async interface for creating scoped StorageClient instances.
 
@@ -8,7 +8,8 @@ A connector encapsulates whatever is needed to reach a given storage backend
 - Verify the backend is reachable (`verify_connection`)
 - Verify the caller has access rights (`verify_access`)
 - Produce a ready-to-use `StorageClient` (`connect`)
-All three operations are *coroutines* so event-loop callers remain non-blocking.
+All three operations are *coroutines* so event-loop callers remain
+non-blocking.
 """
 
 from __future__ import annotations
@@ -40,7 +41,8 @@ class StorageConnector(ABC):
             PermissionError - access denied
 
 
-        Implementations MUST wrap raw backends with ScopedFileBackend (or equivalent)
+        Implementations MUST wrap raw backends with ScopedFileBackend
+        (or equivalent)
         to enforce path confinement and prevent directory escape.
         """
         ...
