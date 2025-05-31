@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import os
 from urllib.parse import unquote, urlparse
+from typing import Optional, Dict, Any
 
 from darca_storage.client import StorageClient
 from darca_storage.connectors.local import LocalStorageConnector
@@ -29,12 +30,21 @@ class StorageConnectorFactory:
     """
 
     @staticmethod
-    async def from_url(url: str) -> StorageClient:
+    async def from_url(
+        url: str,
+        *,
+        session_metadata: Optional[Dict[str, Any]] = None,
+        credentials: Optional[Dict[str, str]] = None,
+        parameters: Optional[Dict[str, str]] = None,
+    ) -> StorageClient:
         """
         Parse a URL and return a connected, scoped StorageClient.
 
         Args:
             url (str): A storage URL (e.g., file:///data)
+            session_metadata (dict, optional): Metadata associated with this session
+            credentials (dict, optional): Credential map (e.g., {"user": "...", "token": "..."})
+            parameters (dict, optional): Additional connection parameters
 
         Returns:
             StorageClient: Session-aware client wrapping a ScopedFileBackend
@@ -51,7 +61,12 @@ class StorageConnectorFactory:
         if scheme == "file":
             base_path = os.path.abspath(path or "/")
 
-            connector = LocalStorageConnector(base_path=base_path)
+            connector = LocalStorageConnector(
+                base_path=base_path,
+                #credentials=credentials,
+                #parameters=parameters,
+            )
+
             backend: FileBackend = await connector.connect()
 
             # Enforce scoped backend invariant
@@ -63,7 +78,8 @@ class StorageConnectorFactory:
 
             return StorageClient(
                 backend=backend,
-                session_metadata={"scheme": "file", "base_path": base_path},
+                session_metadata={**(session_metadata or {}), "scheme": "file", "base_path": base_path},
+                credentials=credentials,
             )
 
         raise ValueError(f"Unsupported storage scheme: '{scheme}'")

@@ -12,7 +12,7 @@ class StorageClient(FileBackend):
 
     Implements the full FileBackend interface with added support for:
       - Session metadata
-      - Optional user context
+      - Optional user and credential context
       - Introspection and future hooks (e.g. refresh, flush, presign_url)
 
     All paths are relative to the scoped root directory enforced by the backend.
@@ -23,15 +23,15 @@ class StorageClient(FileBackend):
         backend: FileBackend,
         *,
         session_metadata: Optional[Dict[str, Any]] = None,
-        user: Optional[str] = None
+        user: Optional[str] = None,
+        credentials: Optional[Dict[str, str]] = None,
     ) -> None:
         self._backend = backend
         self._session_metadata = session_metadata or {}
         self._user = user
+        self._credentials = credentials or {}
 
-    #
-    # ─── FILEBACKEND INTERFACE IMPLEMENTATION ──────────────────────────────────────
-    #
+    # ─── FILEBACKEND INTERFACE IMPLEMENTATION ─────────────────────────────────────
 
     async def read(self, relative_path: str, *, binary: bool = False) -> Union[str, bytes]:
         return await self._backend.read(relative_path=relative_path, binary=binary)
@@ -91,9 +91,7 @@ class StorageClient(FileBackend):
     async def stat_mtime(self, relative_path: str) -> float:
         return await self._backend.stat_mtime(relative_path=relative_path)
 
-    #
-    # ─── SESSION METADATA AND EXTENSION HOOKS ──────────────────────────────────────
-    #
+    # ─── SESSION METADATA AND EXTENSION HOOKS ─────────────────────────────────────
 
     @property
     def backend(self) -> FileBackend:
@@ -110,14 +108,21 @@ class StorageClient(FileBackend):
         """Logical user this session may be scoped to."""
         return self._user
 
+    @property
+    def credentials(self) -> Dict[str, str]:
+        """Credentials associated with this session (if any)."""
+        return self._credentials
+
     def context(self) -> Dict[str, Any]:
         """
         Return contextual information for debugging or observability.
+        Redacts credentials by default.
         """
         return {
             "user": self._user,
             "session_metadata": self._session_metadata,
             "backend_type": type(self._backend).__name__,
+            "credentials": {k: "***" for k in self._credentials} if self._credentials else None,
         }
 
     async def refresh(self) -> None:
