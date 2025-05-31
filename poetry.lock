@@ -363,14 +363,14 @@ setuptools = "*"
 
 [[package]]
 name = "darca-exception"
-version = "0.1.0"
+version = "0.1.1"
 description = "Exception module for reuse along projects."
 optional = false
 python-versions = "<4.0,>=3.12"
 groups = ["main"]
 files = [
-    {file = "darca_exception-0.1.0-py3-none-any.whl", hash = "sha256:9fb2c4fae92da5397de16ffcaf3253d95d5d7fa458ba9eb1b496e6466bafd7ae"},
-    {file = "darca_exception-0.1.0.tar.gz", hash = "sha256:e72905279efc07a15c2248c4dcb25ab25204520129ce400773a1c94e2d2efd8d"},
+    {file = "darca_exception-0.1.1-py3-none-any.whl", hash = "sha256:f28e629a63629d0d7c5375e11add20baed8f30acb85bdd6be742800e8e7e0cf1"},
+    {file = "darca_exception-0.1.1.tar.gz", hash = "sha256:0c6a4d81c3c25af31c49ca9e3bc7a0a90039e87d1237f65daf9295abb60ab8a6"},
 ]
 
 [package.dependencies]
@@ -1386,4 +1386,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "5423740b8c8234e97a7c93c838ddc204121d9a791a2a88d7449f9a657c84ec66"
+content-hash = "5cfe8e84dbcbb38542b86a1537a81f042b43b3646b920e0bce50d4dc4c89dd8b"
