@@ -1,15 +1,20 @@
 API Reference
 =============
 
-.. currentmodule:: darca_storage
+This section documents the internal components of `darca-storage`, including storage clients,
+connectors, file backends, scoping logic, and exception types.
 
-Client
-------
+----
 
-.. autoclass:: darca_storage.client.StorageClient
+Storage Client
+--------------
+
+.. automodule:: darca_storage.client
    :members:
    :undoc-members:
    :show-inheritance:
+
+----
 
 Factory
 -------
@@ -18,12 +23,17 @@ Factory
    :members:
    :undoc-members:
 
+----
+
 Connectors
 ----------
 
 .. automodule:: darca_storage.connectors.local
    :members:
    :undoc-members:
+   :show-inheritance:
+
+----
 
 Backends
 --------
@@ -31,13 +41,19 @@ Backends
 .. automodule:: darca_storage.backends.local_file_backend
    :members:
    :undoc-members:
+   :show-inheritance:
+
+----
 
 Scoped Backend
 --------------
 
-.. autoclass:: darca_storage.decorators.scoped_backend.ScopedFileBackend
+.. automodule:: darca_storage.decorators.scoped_backend
    :members:
    :undoc-members:
+   :show-inheritance:
+
+----
 
 Interfaces
 ----------
@@ -50,9 +66,16 @@ Interfaces
    :members:
    :undoc-members:
 
+.. automodule:: darca_storage.interfaces.credential_aware
+   :members:
+   :undoc-members:
+
+----
+
 Exceptions
 ----------
 
 .. automodule:: darca_storage.exceptions
    :members:
    :undoc-members:
+   :show-inheritance:

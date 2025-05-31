@@ -20,6 +20,7 @@ from darca_storage.client import StorageClient
 from darca_storage.connectors.local import LocalStorageConnector
 from darca_storage.interfaces.file_backend import FileBackend
 from darca_storage.decorators.scoped_backend import ScopedFileBackend
+from darca_storage.interfaces.credential_aware import CredentialAware
 
 
 class StorageConnectorFactory:
@@ -63,9 +64,13 @@ class StorageConnectorFactory:
 
             connector = LocalStorageConnector(
                 base_path=base_path,
-                #credentials=credentials,
-                #parameters=parameters,
+                credentials=credentials,
+                parameters=parameters,
             )
+
+            # Inject credentials if the connector supports it
+            if isinstance(connector, CredentialAware) and credentials:
+                connector.inject_credentials(credentials)
 
             backend: FileBackend = await connector.connect()
 

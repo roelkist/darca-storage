@@ -1,7 +1,12 @@
-darca-storage
-===================
+Darca Storage
+=============
 
-Storage intance with file operation support for multiple backends.
+Async-first, secure, and extensible storage backend abstraction for the Darca ecosystem.
+
+`darca-storage` provides a clean interface for reading and writing to structured storage backends —
+local, cloud, or custom — with support for path confinement, credential injection, and session-aware logic.
+
+----
 
 |Build Status| |Deploy Status| |CodeCov| |Formatting| |License| |PyPi Version| |Docs|
 
@@ -24,6 +29,20 @@ Storage intance with file operation support for multiple backends.
    :target: https://roelkist.github.io/darca-storage/
    :alt: GitHub Pages
 
+----
+
+Features
+--------
+
+- ✅ Async-compatible `FileBackend` interface
+- 🔐 Scoped access via `ScopedFileBackend`
+- 🧠 Session-aware `StorageClient` with observability
+- 🔌 Pluggable storage connectors (e.g., file://)
+- 🔄 Credential and user context propagation
+- 🧪 Easy to test and extend
+
+----
+
 📦 Installation
 ---------------
 
@@ -37,6 +56,57 @@ Or using Poetry:
 
    poetry add darca-storage
 
+----
+
+Quick Example
+-------------
+
+.. code-block:: python
+
+    from darca_storage.factory import StorageConnectorFactory
+
+    client = await StorageConnectorFactory.from_url("file:///tmp/darca")
+
+    await client.write("hello.txt", content="Hello Darca!")
+    text = await client.read("hello.txt")
+    print(text)
+
+----
+
+Security by Default
+-------------------
+
+All paths are resolved via `ScopedFileBackend`, which:
+
+- Normalizes and confines all access to a declared `base_path`
+- Prevents path traversal (e.g., `../../etc/passwd`)
+- Raises `StorageClientPathViolation` if the boundary is violated
+
+----
+
+Extending
+---------
+
+Implement a new backend:
+
+.. code-block:: python
+
+    class MyBackend(FileBackend):
+        async def read(self, path: str, *, binary=False) -> Union[str, bytes]:
+            ...
+
+Implement a new connector:
+
+.. code-block:: python
+
+    class MyConnector(StorageConnector):
+        async def connect(self) -> FileBackend:
+            return ScopedFileBackend(...)
+
+Then register your scheme inside `StorageConnectorFactory`.
+
+----
+
 📚 Documentation
 ----------------
 
@@ -49,6 +119,8 @@ To build locally:
 .. code-block:: bash
 
    make docs
+
+----
 
 🧪 Testing
 ----------
@@ -65,6 +137,8 @@ Coverage and reports:
 - Stores HTML output in `htmlcov/`
 - Fully parallel test support with `xdist`
 
+----
+
 🤝 Contributing
 ---------------
 
@@ -75,6 +149,8 @@ We welcome all contributions!
 - You can also open feature requests or issues using our GitHub templates
 
 See `CONTRIBUTING.rst` for detailed guidelines.
+
+----
 
 📄 License
 ----------

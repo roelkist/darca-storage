@@ -1,94 +1,112 @@
 Usage Guide
 ===========
 
-This guide demonstrates how to use `darca-storage` in real-world applications.
+This guide introduces the core usage patterns of `darca-storage`, including how to create
+a `StorageClient`, perform file operations, and leverage session-aware metadata securely.
 
-Quickstart
-----------
+----
 
-Install:
+Create a StorageClient
+-----------------------
 
-.. code-block:: bash
-
-    pip install darca-storage
-
-Get a storage client for the local filesystem:
+The `StorageConnectorFactory` resolves URL-based storage targets into secure, ready-to-use clients.
 
 .. code-block:: python
 
     from darca_storage.factory import StorageConnectorFactory
 
-    async def init_client():
-        client = await StorageConnectorFactory.from_url("file:///tmp/app-storage")
-        await client.write("welcome.txt", "Hello Darca!")
-        print(await client.read("welcome.txt"))
+    client = await StorageConnectorFactory.from_url("file:///tmp/my-data")
 
-All client paths are **scoped** to the base directory you provide.
-Escape attempts like `../../etc/passwd` will be rejected.
+This guarantees a `StorageClient` backed by a `ScopedFileBackend`, which confines all paths
+to the declared root directory.
 
-API Overview
-------------
+----
 
-Once connected, the client exposes all core methods:
+Perform File Operations
+-----------------------
 
-.. code-block:: python
-
-    await client.write("file.txt", "data")
-    exists = await client.exists("file.txt")
-    content = await client.read("file.txt")
-    await client.rename("file.txt", "renamed.txt")
-    await client.delete("renamed.txt")
-
-Directory management:
+Each operation is asynchronous and works with either text or binary content.
 
 .. code-block:: python
 
-    await client.mkdir("data/logs", parents=True)
-    files = await client.list("data", recursive=True)
-    await client.rmdir("data/logs")
+    await client.write("notes.txt", content="hello world")
+    text = await client.read("notes.txt")
+    print(text)
+
+    exists = await client.exists("notes.txt")
+    await client.rename("notes.txt", "archived/hello.txt")
+
+    await client.mkdir("logs")
+    await client.rmdir("logs")
+
+    await client.delete("archived/hello.txt")
+
+----
+
+Use Binary Files
+----------------
+
+Set the `binary=True` flag when working with bytes.
+
+.. code-block:: python
+
+    await client.write("data.bin", content=b"\x00\xFF", binary=True)
+    content = await client.read("data.bin", binary=True)
+    assert isinstance(content, bytes)
+
+----
 
 Session Metadata
 ----------------
 
-`StorageClient` captures session context, useful for inspection or auditing:
+Session context (e.g. repository name, storage path, tags) is propagated through `StorageClient`.
 
 .. code-block:: python
 
-    print(client.user)  # 'your-username' (optional)
-    print(client.session)  # {'scheme': 'file', 'base_path': '/tmp/app-storage'}
+    context = client.context()
+    print(context["session_metadata"])
 
-    print(client.context())
-    # {
-    #   'user': 'your-username',
-    #   'session_metadata': {'scheme': 'file', 'base_path': ...},
-    #   'backend_type': 'ScopedFileBackend'
-    # }
+----
 
-Testing
--------
+Credential Support
+------------------
 
-You can use a real `file://` temp directory for integration tests, or mock the backend for unit tests:
+If provided, credentials are injected automatically into the connector and exposed securely:
 
 .. code-block:: python
 
-    from unittest.mock import AsyncMock
-    from darca_storage.client import StorageClient
+    client = await StorageConnectorFactory.from_url(
+        "file:///var/data",
+        credentials={"posix_user": "backup"},
+        session_metadata={"request_id": "abc-123"},
+    )
 
-    backend = AsyncMock()
-    backend.read.return_value = "mock"
-    client = StorageClient(backend=backend)
+    print(client.credentials)      # {'posix_user': 'backup'}
+    print(client.context()["credentials"])  # {'posix_user': '***'}
 
-    assert await client.read("x") == "mock"
+----
 
-Future Extensions
------------------
+Path Security: ScopedFileBackend
+--------------------------------
 
-Planned enhancements include:
+Every file path is confined to a declared root directory. Any attempt to escape (e.g. via `../`) raises an error:
 
-- `s3://` for AWS S3
-- `mem://` for ephemeral storage
-- `presign_url()` for web access
-- Token-aware `refresh()` for cloud credentials
+.. code-block:: python
 
-All connectors will be discoverable via `StorageConnectorFactory.from_url(...)`.
+    await client.write("../etc/passwd", "oops")
 
+.. error::
+
+    StorageClientPathViolation: Access to '/etc/passwd' is outside the storage base path
+
+----
+
+Flush and Refresh Hooks
+-----------------------
+
+Hooks for future extension (e.g., buffering, auth refresh):
+
+.. code-block:: python
+
+    await client.flush()    # no-op unless implemented
+    await client.refresh()  # e.g. for cloud token renewal
