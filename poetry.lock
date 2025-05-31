@@ -378,18 +378,18 @@ darca-log-facility = ">=0.1.0,<0.2.0"
 
 [[package]]
 name = "darca-file-utils"
-version = "0.1.0"
+version = "0.1.1"
 description = "Logging facility for reuse along projects."
 optional = false
 python-versions = "<4.0,>=3.12"
 groups = ["main"]
 files = [
-    {file = "darca_file_utils-0.1.0-py3-none-any.whl", hash = "sha256:d8ae10821a29993a0cb22256af465521726059c7ed7b303cf05d05db5fefdca5"},
-    {file = "darca_file_utils-0.1.0.tar.gz", hash = "sha256:63a4ce4f9aa1d16753d5496af2fb3371645f4343b6a5b267df62ad6a189e5388"},
+    {file = "darca_file_utils-0.1.1-py3-none-any.whl", hash = "sha256:c01e90dcc1cccb535402971ba5ddf8e56d7d0fc3e2efbbcd0742bc3b10fe1a5a"},
+    {file = "darca_file_utils-0.1.1.tar.gz", hash = "sha256:b24f4fa16cf824a2bc971dff2140cfdd475d204cc15f0c22d91692be0fcd7847"},
 ]
 
 [package.dependencies]
-darca-exception = ">=0.1.0,<0.2.0"
+darca-exception = ">=0.1.1,<0.2.0"
 darca-log-facility = ">=0.1.0,<0.2.0"
 pyyaml = ">=6.0.2,<7.0.0"
 
@@ -1386,4 +1386,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "5cfe8e84dbcbb38542b86a1537a81f042b43b3646b920e0bce50d4dc4c89dd8b"
+content-hash = "332d3863532b5d7beae80d01e11483417a68e124d0f907b23950358ba99413cb"
